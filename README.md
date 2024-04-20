@@ -31,4 +31,4 @@ Synchrinizator - это сервис, синхронизирующий файл�
 
 ## Авторы
 
-* Алексей Саврасов - [@aleksei_savrasov](git@github.com:AlekseySavrasov/synchronizator.git)
+* Алексей Саврасов - [@aleksei_savrasov](https://github.com/AlekseySavrasov/)
