@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e139237-04a5-4177-8a9d-483ad3d913a1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screenshot_log_information.png" beforeDir="false" afterPath="$PROJECT_DIR$/log_information.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +44,8 @@
     "Python.test.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/alexey/PycharmProjects/FilesSynchronization/Screenshot_log_information.png",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/alexey/PycharmProjects/python_advanced_diploma",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -184,7 +183,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712904065419</updated>
       <workItem from="1713195912479" duration="21808000" />
-      <workItem from="1713605477409" duration="10278000" />
+      <workItem from="1713605477409" duration="11382000" />
     </task>
     <servers />
   </component>

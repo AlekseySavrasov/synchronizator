@@ -1,6 +1,6 @@
 # Проект "Synchronizator"
 
-![Log information](/home/alexey/PycharmProjects/FilesSynchronization/Screenshot_log_information.png)
+![Log information](/static/log_information.png)
 
 ## Описание
 
@@ -14,7 +14,7 @@ Synchrinizator - это сервис, синхронизирующий файл�
 
 ### Установка
 
-1. Склонировать репозиторий: git clone ...........
+1. Склонировать репозиторий: git clone git@github.com:AlekseySavrasov/synchronizator.git
 2. Перейти в директорию проекта: cd FilesSynchronization
 
 ### Настройка
@@ -31,4 +31,4 @@ Synchrinizator - это сервис, синхронизирующий файл�
 
 ## Авторы
 
-* Алексей Саврасов - [@aleksei_savrasov]()
+* Алексей Саврасов - [@aleksei_savrasov](git@github.com:AlekseySavrasov/synchronizator.git)
