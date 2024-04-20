@@ -1,43 +1,52 @@
-import loguru
-import os
 import time
-from dotenv import load_dotenv
 
-load_dotenv()
-old_files = current_files = {}
+from loguru import logger
+from typing import Dict, Tuple
 
+from check_env import check_env
+from file_utils import create_cloud_files, get_files_local_dir
+from yandex_disk_handler import YandexDisk
 
-def get_files_in_current_directory(dir_path):
-    exists_files = {}
+local_paths: Tuple[str, str, int]
+yandex_disk: YandexDisk
+sync_time: int
 
-    for i_file in os.listdir(dir_path):
-        path_file = f"{dir_path}/{i_file}"
+local_paths, yandex_disk, sync_time = check_env()
 
-        if os.path.isfile(path_file):
-            exists_files[i_file] = os.stat(path_file).st_mtime
-    return exists_files
-
-
-while True:
-    old_files = current_files
-    current_files = get_files_in_current_directory(os.getenv("sync_dir"))
-
-    print(f"Старые файлы до сравнения с новыми: {old_files}")
-    for key, value in current_files.items():
-        if key not in old_files or value != old_files[key]:
-            print(f"Пушим {key} на диск")
-        else:
-            old_files.pop(key)
-    print(f"Старые файлы после сравнения с новыми: {old_files}")
-    for key in old_files.keys():
-        print(f"Удаляем {key} с диска")
-    print(f"Старые файлы: {old_files}")
-
-    print(f"Новые файлы: {current_files}")
-    print(time.time())
-
-    time.sleep(int(os.getenv("sync_time")))  # Подождем N секунд перед следующей проверкой
+logger.add(
+    f"{local_paths[1]}logfile.log",
+    format="synchronizer {time:YYYY-MM-DD HH:mm:ss.SSS} {level} {message}",
+    level="INFO"
+)
+logger.info(f"Программа синхронизации файлов начинает работу с директорией\n{local_paths[0]}")
 
 
-# if __name__ == "__main__":
-#     func()
+def start_sync() -> None:
+    first_sync: bool = False
+
+    while True:
+        local_folder: Dict[str, str] = get_files_local_dir(local_paths[0])
+        cloud_files: Dict[str, str] = create_cloud_files(yandex_disk.get_info())
+
+        if not first_sync:
+            for item_name in local_folder:
+                if item_name not in cloud_files:
+                    yandex_disk.load(local_paths[0], item_name)
+            first_sync = True
+            continue
+
+        for item_name in local_folder.keys() - cloud_files.keys():
+            yandex_disk.load(local_paths[0], item_name)
+
+        for item_name, item_sha256 in cloud_files.items():
+            if item_name in local_folder and local_folder[item_name] != item_sha256:
+                yandex_disk.reload(local_paths[0], item_name)
+
+        for item_name in cloud_files.keys() - local_folder.keys():
+            yandex_disk.delete(item_name)
+
+        time.sleep(int(sync_time))
+
+
+if __name__ == "__main__":
+    start_sync()
