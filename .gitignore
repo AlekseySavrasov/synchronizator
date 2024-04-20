@@ -619,3 +619,5 @@ token.txt
 
 # db files
 *.db
+
+.idea/workspace.xml

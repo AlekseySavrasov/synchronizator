@@ -1,3 +1,8 @@
+"""
+Скрипт для проверки окружения и настройки параметров синхронизации файлов с Яндекс.Диском.
+
+"""
+
 import os
 from typing import Tuple
 from dotenv import load_dotenv
@@ -5,6 +10,15 @@ from yandex_disk_handler import YandexDisk
 
 
 def check_local_path(key: str) -> str:
+    """
+    Проверяет и возвращает путь к локальной директории из переменной окружения.
+
+    Args:
+        key (str): Название переменной окружения.
+
+    Returns:
+        str: Путь к локальной директории.
+    """
     value: str = os.environ.get(key)
 
     if value is None:
@@ -18,12 +32,24 @@ def check_local_path(key: str) -> str:
 
 
 def check_local_paths() -> Tuple[str, str]:
+    """
+    Проверяет и возвращает пути к локальной директории синхронизации и файлу лога.
+
+    Returns:
+        Tuple[str, str]: Путь к локальной директории синхронизации и путь к файлу лога.
+    """
     path_sync_dir: str = check_local_path("path_sync_dir")
     log_path: str = check_local_path("log_path")
     return path_sync_dir, log_path
 
 
 def check_sync_time() -> str:
+    """
+    Проверяет и возвращает время синхронизации из переменной окружения.
+
+    Returns:
+        str: Время синхронизации.
+    """
     sync_time: str = os.getenv("sync_time")
 
     if sync_time is None:
@@ -35,6 +61,12 @@ def check_sync_time() -> str:
 
 
 def check_remote_data() -> YandexDisk:
+    """
+    Проверяет и возвращает данные для доступа к удаленному хранилищу на Яндекс.Диске.
+
+    Returns:
+        YandexDisk: Объект для работы с Яндекс.Диском.
+    """
     cloud_dir: str = os.getenv("cloud_dir")
     cloud_token: str = os.getenv("cloud_token")
 
@@ -49,6 +81,12 @@ def check_remote_data() -> YandexDisk:
 
 
 def check_env() -> Tuple[Tuple[str, str], YandexDisk, str]:
+    """
+    Проверяет и возвращает настройки окружения для синхронизации файлов.
+
+    Returns:
+        Tuple[Tuple[str, str], YandexDisk, str]: Кортеж с настройками окружения.
+    """
     return check_local_paths(), check_remote_data(), check_sync_time()
 
 
