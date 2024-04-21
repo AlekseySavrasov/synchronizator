@@ -92,7 +92,7 @@ class YandexDisk:
             return response.status_code == 204
 
         except requests.exceptions.ConnectionError:
-            logger.info(f"Файл {filename} не удален. Ошибка соединения")
+            logger.error(f"Файл {filename} не удален. Ошибка соединения")
             return False
 
     def get_info(self) -> dict:
@@ -108,17 +108,18 @@ class YandexDisk:
         try:
             response: Response = requests.get(url, headers=headers)
 
-            if response.status_code == 401:
+            if response and response.status_code == 401:
                 raise requests.exceptions.HTTPError(
                     "Ошибка авторизации пользователя. Проверьте корректность токена 'cloud_token'"
                 )
-            elif response.status_code == 404:
+            elif response and response.status_code == 404:
                 raise requests.exceptions.HTTPError(
                     "Ошибка поиска удаленного ресурса. Проверьте корректность названия удаленной папки 'cloud_dir'"
                 )
 
             return response.json()
-        except requests.exceptions.RequestException:
+
+        except requests.exceptions.ConnectionError:
             logger.error(f"Ошибка подключения к удаленному диску. Ошибка соединения")
 
-            return {}
+        return {}
