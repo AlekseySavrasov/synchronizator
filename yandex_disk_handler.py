@@ -108,11 +108,11 @@ class YandexDisk:
         try:
             response: Response = requests.get(url, headers=headers)
 
-            if response and response.status_code == 401:
+            if response.status_code == 401:
                 raise requests.exceptions.HTTPError(
                     "Ошибка авторизации пользователя. Проверьте корректность токена 'cloud_token'"
                 )
-            elif response and response.status_code == 404:
+            elif response.status_code == 404:
                 raise requests.exceptions.HTTPError(
                     "Ошибка поиска удаленного ресурса. Проверьте корректность названия удаленной папки 'cloud_dir'"
                 )
